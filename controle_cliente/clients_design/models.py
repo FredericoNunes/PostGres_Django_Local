@@ -2,30 +2,30 @@ from django.db import models
 
 # Create your models here.
 
-class cliente(models.Model):
+class Cliente(models.Model):
 
     class Meta:
         db_table = '"design"."cliente"'
 
-    id = models.IntegerField(primary_key=True)
+    #id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=20)
     sobrenome = models.CharField(max_length=20)
 
-class profissional(models.Model):
+class Profissional(models.Model):
 
     class Meta:
         db_table = '"design"."profissional"'
 
-    id = models.IntegerField(primary_key=True)
+    #id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=20)
     sobrenome = models.CharField(max_length=20)
 
-class secaomarcada(models.Model):
+class SecaoMarcada(models.Model):
 
     class Meta:
         db_table = '"design"."secao"'
 
-    id = models.IntegerField(primary_key=True)
+    #id = models.AutoField(primary_key=True)
     data_secao = models.DateTimeField()
-    cliente_nome = models.ForeignKey(cliente, on_delete=models.DO_NOTHING)
-    profissional_nome = models.ForeignKey(profissional, on_delete=models.DO_NOTHING)
+    cliente_id = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING)
+    profissional_id = models.ForeignKey(Profissional, on_delete=models.DO_NOTHING)

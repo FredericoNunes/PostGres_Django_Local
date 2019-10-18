@@ -1,35 +1,36 @@
 import graphene
 from graphene_django.types import DjangoObjectType
-from .models import cliente, profissional, secaomarcada
+from .models import Cliente, Profissional, SecaoMarcada
 
 class ClienteType(DjangoObjectType):
     class Meta:
-        model = cliente
+        model = Cliente
 
-class Cliente_Query(graphene.ObjectType):
+class ClienteQuery(graphene.ObjectType):
     all_clientes = graphene.List(ClienteType)
 
     def resolve_all_clientes(self, info, **kwargs):
-        return cliente.objects.all()
+        return Cliente.objects.all()
 
 class ProfissionalType(DjangoObjectType):
     class Meta:
-        model = profissional
+        model = Profissional
 
-class Profissional_Query(graphene.ObjectType):
+class ProfissionalQuery(graphene.ObjectType):
     all_profissional = graphene.List(ProfissionalType)
 
     def resolve_all_profissional(self, info, **kwargs):
-        return profissional.objects.all()
+        return Profissional.objects.all()
 
 
 class SecaoMarcadaType(DjangoObjectType):
     class Meta:
-        model = secaomarcada
+        model = SecaoMarcada
 
-class SecaoMarcada_Query(graphene.ObjectType):
+
+class SecaoMarcadaQuery(graphene.ObjectType):
     all_secaomarcada = graphene.List(SecaoMarcadaType)
 
     def resolve_all_secaomarcada(self, info, **kwargs):
-        return secaomarcada.objects.all()
+        return SecaoMarcada.objects.all()
 

@@ -1,10 +1,21 @@
 import graphene
-from clients_design.schema import Cliente_Query, Profissional_Query, SecaoMarcada_Query
+from clients_design.schema import ClienteQuery, ProfissionalQuery, SecaoMarcadaQuery
+from clients_design.mutation import CriarCliente, CriarProfissional, CriarSecao
 
-class Query(Cliente_Query,
-            Profissional_Query,
-            SecaoMarcada_Query,
+class Query(ClienteQuery,
+            ProfissionalQuery,
+            SecaoMarcadaQuery,
             graphene.ObjectType):
     pass
 
-schema = graphene.Schema(query=Query)
+
+
+class Mutation(graphene.ObjectType):
+    criar_cliente = CriarCliente.Field()
+    criar_profissional = CriarProfissional.Field()
+    criar_secao = CriarSecao.Field()
+
+
+
+
+schema = graphene.Schema(query=Query,mutation=Mutation)
