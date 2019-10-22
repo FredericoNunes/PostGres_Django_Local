@@ -1,7 +1,7 @@
 import graphene
 
-from clients_design.schema import ClienteType, ProfissionalType, SecaoMarcadaType
-from clients_design.models import Cliente, Profissional, SecaoMarcada
+from clients_design.schema import ClienteType, ProfissionalType, SecaoMarcadaType, ProdutosType, ItensConsumidosType
+from clients_design.models import Cliente, Profissional, SecaoMarcada, Produtos, ItensConsumidos
 
 
 class CriarCliente(graphene.Mutation):
@@ -73,3 +73,51 @@ class CriarSecao(graphene.Mutation):
         secao.save()
 
         return CriarSecao(secao=secao)
+
+class CriarProduto(graphene.Mutation):
+    id = graphene.Int()
+    nome_produto = graphene.String()
+    preco = graphene.Int()
+
+    class Arguments:
+        nome_produto = graphene.String()
+        preco = graphene.Int()
+
+    produto = graphene.Field(ProdutosType)
+
+    def mutate(self, info, nome_produto, preco):
+        produto = Produtos(
+            nome_produto=nome_produto,
+            preco=preco
+        )
+        produto.save()
+
+        return CriarProduto(produto=produto)
+
+class CriarItensConsumidos(graphene.Mutation):
+    id = graphene.Int()
+    secao_id = graphene.Int()
+    produto_id = graphene.Int()
+    quantidade = graphene.Int()
+
+    #2
+    class Arguments:
+        secao_id = graphene.Int()
+        produto_id = graphene.Int()
+        quantidade = graphene.Int()
+
+    itensConsumidos = graphene.Field(ItensConsumidosType)
+
+    #3
+    def mutate(self, info, secao_id, produto_id,quantidade):
+        secao = SecaoMarcada.objects.get(pk=secao_id)
+        produto = Produtos.objects.get(pk=produto_id)
+
+        itensConsumidos = ItensConsumidos(
+            secao_id=secao,
+            produto_id=produto,
+            quantidade=quantidade)
+
+        itensConsumidos.save()
+
+        return CriarItensConsumidos(itensConsumidos=itensConsumidos)

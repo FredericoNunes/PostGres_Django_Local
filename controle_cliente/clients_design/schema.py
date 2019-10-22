@@ -1,6 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType
-from .models import Cliente, Profissional, SecaoMarcada
+from .models import Cliente, Profissional, SecaoMarcada, Produtos, ItensConsumidos
 
 class ClienteType(DjangoObjectType):
     class Meta:
@@ -28,9 +28,32 @@ class SecaoMarcadaType(DjangoObjectType):
         model = SecaoMarcada
 
 
+
 class SecaoMarcadaQuery(graphene.ObjectType):
     all_secaomarcada = graphene.List(SecaoMarcadaType)
 
     def resolve_all_secaomarcada(self, info, **kwargs):
         return SecaoMarcada.objects.all()
 
+
+class ProdutosType(DjangoObjectType):
+    class Meta:
+        model = Produtos
+
+class ProdutosQuery(graphene.ObjectType):
+    all_produtos = graphene.List(ProdutosType)
+
+    def resolve_all_produtos(self, info, **kwargs):
+        return Produtos.objects.all()
+
+class ItensConsumidosType(DjangoObjectType):
+    class Meta:
+        model = ItensConsumidos
+
+
+
+class ItensConsumidosQuery(graphene.ObjectType):
+    all_itensconsumidos = graphene.List(ItensConsumidosType)
+
+    def resolve_all_intensconsumidos(self, info, **kwargs):
+        return ItensConsumidos.objects.all()
